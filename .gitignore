@@ -1,0 +1,4 @@
+server/venv
+readable/node_modules
+
+*.pyc
