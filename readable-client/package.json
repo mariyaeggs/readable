@@ -9,6 +9,8 @@
     "eslint": "^4.19.1",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.5",
+    "lodash.filter": "^4.6.0",
+    "lodash.pluck": "^3.1.2",
     "mongodb": "^3.0.5",
     "npm": "^5.8.0",
     "prop-types": "^15.6.1",
