@@ -22,6 +22,7 @@ class Book(mysql_connector.BaseModel):
     author = Column(String)
     image_url = Column(String)
     isbn = Column(String)
+    shelf = Column(Integer)
 
     def to_dict(self):
         return {
@@ -29,7 +30,8 @@ class Book(mysql_connector.BaseModel):
             'title': self.title,
             'author': self.author,
             'image_url': self.image_url,
-            'isbn': self.isbn
+            'isbn': self.isbn,
+            'shelf': self.shelf
         }
 
 

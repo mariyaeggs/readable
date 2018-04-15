@@ -5,43 +5,29 @@ import * as BooksAPI from './utils/BooksAPI';
 import './App.css';
 
 class Readable extends React.Component {
-  static propTypes = {
-    books: PropTypes.arrayOf(PropTypes.object).isRequired,
-  }
   state = {
     books: [],
-    showSearchPage: false
+    showSearchPage: false,
   }
 
   componentDidMount() {
-    console.log('blah***********************')
     BooksAPI.getAll().then((books) => {
-      this.setState( { books } )
-      console.log('books', books)
-    })
+      console.log('books', books);
+      const organizedBooks = this.organizeBooksByShelf(books);
+      this.setState({ books: organizedBooks });
+    });
+  }
+
+  organizeBooksByShelf = (books) => {
+    const organizedBooks = books;
+    console.log('organized books', organizedBooks);
+    return organizedBooks;
   }
 
   render() {
     const { books } = this.state;
     return (
       <div className="app">
-        <ol>
-          { books.map(book => (
-            <li key={book.id}>
-              <div
-                className="book-cover"
-                style={{
-                  width: 10,
-                  height: 30,
-                  backgroundImage: `url(${book.image_url})`,
-                }}>
-              </div>
-              <div>
-                { book.title }
-              </div>
-            </li>
-          )) }
-        </ol>
         {this.state.showSearchPage ? (
           <div className="search-books">
             <div className="search-books-bar">
@@ -68,7 +54,7 @@ class Readable extends React.Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       { books.map(book => (
-                        <li>
+                        <li key={book.id}>
                           <div className="book">
                             <div className="book-top">
                               <div
@@ -94,6 +80,9 @@ class Readable extends React.Component {
                             </div>
                             <div className="book-authors">
                               { book.author }
+                            </div>
+                            <div>
+                              { book.shelf }
                             </div>
                           </div>
                         </li>
