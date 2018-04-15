@@ -19,8 +19,8 @@ export const getAll = () =>
   fetch(`${api}/books`, { headers })
     .then(res => res.json())
 
-export const update = (book, shelf) =>
-  fetch(`${api}/books/${book.id}`, {
+export const updateShelf = (bookId, shelf) =>
+  fetch(`${api}/book/${bookId}`, {
     method: 'PUT',
     headers: {
       ...headers,
@@ -28,6 +28,7 @@ export const update = (book, shelf) =>
     },
     body: JSON.stringify({ shelf })
   }).then(res => res.json());
+
 
 export const search = (query) =>
   fetch(`${api}/search`, {
@@ -40,4 +41,6 @@ export const search = (query) =>
   }).then(res => res.json())
     .then(data => data.books);
 
+export const removeBook = bookId =>
+  fetch(`${api}/book/${bookId}`, { method: 'DELETE', headers });
 

@@ -49,9 +49,15 @@ def create_book():
 def search_book():
     book_search_attribute = request.args.get("attribute")
     book_search_value = request.args.get("value")
-    import pdb; pdb.set_trace()
     book_search_response = book_model.search_a_book(book_data)
     return flaskify(book_search_response)
+
+@application.route("/book/<int:book_id>", methods=['DELETE'])
+def remove_book(book_id):
+    delete_response = book_model.remove_book(book_id)
+    return flaskify(delete_response)
+
+
 
 if __name__ == "__main__":
     application.run(debug=True) #autorestart
