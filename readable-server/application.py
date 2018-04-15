@@ -1,16 +1,13 @@
-'''
-Simple Flask application to test deployment to Amazon Web Services
-Uses Elastic Beanstalk and RDS
-
-Author: Scott Rodkey - rodkeyscott@gmail.com
-
-Step-by-step tutorial: https://medium.com/@rodkey/deploying-a-flask-application-on-aws-a72daba6bb80
-'''
+"""Readable Server Application Controller."""
 
 from flask import Flask, render_template, request
+from oto.adaptors.flask import flaskify
+
 from application import db
-from application.models import Data
 from application.forms import EnterDBInfo, RetrieveDBInfo
+from application.models import Data
+from models import book_model
+
 
 # Elastic Beanstalk initalization
 application = Flask(__name__)
@@ -47,9 +44,10 @@ def index():
     
     return render_template('index.html', form1=form1, form2=form2)
 
-@application.route('/books', methods=['GET'])
+@application.route("/books", methods=['GET'])
 def get_books():
-    return 'books brah'
+    all_books_response = book_model.get_books()
+    return flaskify(all_books_response, encoder="utf-8", )
 
 if __name__ == '__main__':
     application.run(host='0.0.0.0')
