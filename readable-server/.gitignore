@@ -1,6 +1,7 @@
 *.pyc
 env
 .env
+.cache
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
