@@ -1,13 +1,18 @@
-# edit the URI below to add your RDS password and your AWS URL
-# The other elements are the same as used in the tutorial
-# format: (user):(password)@(db_identifier).amazonaws.com:3306/(db_name)
+"""Config file."""
+import os
+from dotenv import load_dotenv
 
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://mariyaeggs:dbreadable@dbreadable.czp7awvfoore.us-east-1.rds.amazonaws.com:3306/dbreadable'
+load_dotenv()
 
-# Uncomment the line below if you want to work with a local DB
-#SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
+DBUSER = os.getenv('DBUSER')
+DBPASSWORD=os.getenv('DBPASSWORD')
+DBURL=os.getenv('DBURL')
+DBNAME=os.getenv('DBNAME')
 
-SQLALCHEMY_POOL_RECYCLE = 3600
+SQLALCHEMY_DATABASE_URI = \
+    'mysql+pymysql://{user}:{password}@{url}:3306/{dbname}'.format(
+        user=DBUSER,
+        password=DBPASSWORD,
+        url=DBURL,
+        dbname=DBNAME)
 
-WTF_CSRF_ENABLED = True
-SECRET_KEY = 'dsaf0897sfdg45sfdgfdsaqzdf98sdf0a'
