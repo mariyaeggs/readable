@@ -41,38 +41,13 @@ def get_books():
     return response.Response(message=books_list)
 
 
-def get_book_by_id(book_id):
-    with mysql_connector.db_session() as session:
-        book_result = session.query(Book).get(book_id)
-        if not book_result:
-            return response.create_not_found_response()
-        book = book_result.to_dict()
-    return response.Response(message=book)
-
-
 def update_book(book_id, book_data):
     with mysql_connector.db_session() as session:
         existing_book = session.query(Book).get(book_id)
         if not existing_book:
             return response.create_not_found_response()
-        existing_book.title = book_data.get('title')
+        for book_prop in book_data:
+            setattr(existing_book, book_prop, book_data.get(book_prop))
         session.merge(existing_book)
         updated_book = existing_book.to_dict()
     return response.Response(updated_book)
-
-
-def create_a_book(book_data):
-    book = Book(**book_data)  # unpack data
-    with mysql_connector.db_session() as session:
-        session.add(book)
-        session.flush()
-        return response.Response(
-            message=book.to_dict(), status=201)  # status for new item
-
-
-def search_a_book(book_data):
-    book = Book(**book_data)
-    with mysql_connector.db_session() as session:
-        session.filter(book)
-        session.flush()
-        return response.Response(message=book.to_dict())
