@@ -101,7 +101,7 @@ def test_create_book_success(client, headers):
 
 
 def test_create_book_failure(client, headers):
-    """Test create book success."""
+    """Test create book failure."""
     new_book = {
         'shelf': 1,
         'isbn': '978-0143122968',
@@ -116,3 +116,14 @@ def test_create_book_failure(client, headers):
         '/book', data=json.dumps(new_book), headers=headers)
 
     assert result.status_code == 500
+
+
+def test_delete_book(client, headers):
+    """Test delete a book."""
+    delete_message = 'Successfully deleted book: test title'
+    (flexmock(book_model).should_receive('delete_book').with_args(
+        3).and_return(response.Response(message=delete_message)).once())
+
+    result = client.delete('/book/3', headers=headers)
+
+    assert result.status_code == 200
