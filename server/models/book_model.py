@@ -63,12 +63,6 @@ def update_book(book_id, book_data):
         updated_book = existing_book.to_dict()
     return response.Response(updated_book)
 
-def create_a_book(book_data):
-    book = Book(**book_data) #unpack data
-    with mysql_connector.db_session() as session:
-        session.add(book)
-        session.flush()
-        return response.Response(message=book.to_dict(), status=201) #status for new item
 
 def remove_book(book_id):
     with mysql_connector.db_session() as session:
@@ -79,6 +73,13 @@ def remove_book(book_id):
         session.commit()
     return response.Response(
         message='Successfully deleted book: {}'.format(existing_book_result.title))
+
+def create_book(book_data):
+    book = Book(**book_data) #unpack data
+    with mysql_connector.db_session() as session:
+        session.add(book)
+        session.flush()
+        return response.Response(message=book.to_dict(), status=201) #status for new item
 
 # def search_a_book(book_attribute, book_value):
 #     with mysql_connector.db_session() as session:
