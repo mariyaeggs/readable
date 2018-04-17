@@ -29,18 +29,15 @@ export const updateShelf = (bookId, shelf) =>
     body: JSON.stringify({ shelf })
   }).then(res => res.json());
 
+export const removeBook = bookId =>
+  fetch(`${api}/book/${bookId}`, { method: 'DELETE', headers });
 
-export const search = (query) =>
-  fetch(`${api}/search`, {
+export const createBook = bookData =>
+  fetch(`${api}/book`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ query }),
-  }).then(res => res.json())
-    .then(data => data.books);
-
-export const removeBook = bookId =>
-  fetch(`${api}/book/${bookId}`, { method: 'DELETE', headers });
-
+    body: JSON.stringify(bookData),
+  }).then(res => res.json());

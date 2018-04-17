@@ -14,7 +14,6 @@ from sqlalchemy import String
 from sqlalchemy import Integer
 
 
-
 from flask import Flask
 application = Flask(__name__)
 CORS(application)
@@ -39,11 +38,6 @@ def update_book_by_id(book_id):
     update_book_response = book_model.update_book(book_id, book_data)
     return flaskify(update_book_response)
 
-@application.route("/book", methods=['POST'])
-def create_book():
-    book_data = request.get_json()
-    book_created_response = book_model.create_a_book(book_data)
-    return flaskify(book_created_response)
 
 @application.route("/search", methods=['GET'])
 def search_book():
@@ -57,7 +51,11 @@ def remove_book(book_id):
     delete_response = book_model.remove_book(book_id)
     return flaskify(delete_response)
 
-
+@application.route("/book", methods=['POST'])
+def create_book():
+    book_data = request.get_json() #dict of key value pairs
+    create_book_response = book_model.create_book(book_data)
+    return flaskify(create_book_response)
 
 if __name__ == "__main__":
     application.run(debug=True) #autorestart
