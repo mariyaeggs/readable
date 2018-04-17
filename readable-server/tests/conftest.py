@@ -1,5 +1,6 @@
-import pytest
 import application
+import pytest
+
 
 @pytest.fixture
 def client():

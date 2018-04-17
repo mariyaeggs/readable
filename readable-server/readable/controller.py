@@ -16,7 +16,8 @@ def health_check():
 def get_books():
     return flaskify(book_model.get_books())
 
-@application.route("/book/<int:book_id>", methods=['PUT'])
+
+@application.route('/book/<int:book_id>', methods=['PUT'])
 def update_book_by_id(book_id):
-    book_data = request.get_json() #dict of key value pairs
+    book_data = request.get_json()  # dict of key value pairs
     return flaskify(book_model.update_book(book_id, book_data))

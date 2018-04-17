@@ -7,7 +7,6 @@ from oto import response
 from readable.models import book_model
 
 
-
 def test_base_route(client):
     """Test hello route."""
     result = client.get('/')
@@ -42,7 +41,7 @@ def test_get_books_fail(client):
     assert result_message.get('code') == 'not_found_error'
 
 
-def test_update_book(client):
+def test_update_book_success(client):
     """Test update_book success."""
     mock_updated_book = {'title': 'new title', 'book_id': 1}
     (flexmock(book_model).should_receive('update_book').and_return(
@@ -55,7 +54,7 @@ def test_update_book(client):
     assert result_message == mock_updated_book
 
 
-def test_update_book(client):
+def test_update_book_fail(client):
     """Test update_book when book not found."""
     mock_updated_book = {'title': 'new title', 'book_id': 1}
     (flexmock(book_model).should_receive('update_book').and_return(
@@ -66,11 +65,3 @@ def test_update_book(client):
 
     assert result.status_code == 404
     assert result_message.get('code') == 'not_found_error'
-
-
-
-
-
-
-
-

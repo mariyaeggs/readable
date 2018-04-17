@@ -1,3 +1,3 @@
 [flake8]
-application-import-names=readable
+application-import-names=readable,tests
 import-order-style=google
