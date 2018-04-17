@@ -26,5 +26,9 @@ def update_book_by_id(book_id):
 @application.route('/book', methods=['POST'])
 def create_book():
     book_data = request.get_json()
-    book_created_response = book_model.create_book(book_data)
-    return flaskify(book_created_response)
+    return flaskify(book_model.create_book(book_data))
+
+
+@application.route('/book/<int:book_id>', methods=['DELETE'])
+def delete_book(book_id):
+    return flaskify(book_model.delete_book(book_id))

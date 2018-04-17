@@ -60,3 +60,15 @@ def create_book(book_data):
         session.flush()
         # send a 201 status for item created vs default of 200
         return response.Response(message=book.to_dict(), status=201)
+
+
+def delete_book(book_id):
+    with mysql_connector.db_session() as session:
+        existing_book_result = session.query(Book).get(book_id)
+        if not existing_book_result:
+            return response.create_not_found_response()
+        session.delete(existing_book_result)
+        session.commit()
+    return response.Response(
+        message='Successfully deleted book: {}'.format(
+            existing_book_result.title))
