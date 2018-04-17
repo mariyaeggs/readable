@@ -51,3 +51,12 @@ def update_book(book_id, book_data):
         session.merge(existing_book)
         updated_book = existing_book.to_dict()
     return response.Response(updated_book)
+
+
+def create_book(book_data):
+    book = Book(**book_data)  # unpack data
+    with mysql_connector.db_session() as session:
+        session.add(book)
+        session.flush()
+        # send a 201 status for item created vs default of 200
+        return response.Response(message=book.to_dict(), status=201)
