@@ -1,5 +1,5 @@
 //const api = "mysql+pymysql://mariyaeggs:readable@dbreadable.czp7awvfoore.us-east-1.rds.amazonaws.com/dbreadable"
-const api = 'http://localhost:5000';
+const api = 'http://readable-server-dev.us-east-1.elasticbeanstalk.com/';
 // Generate a unique token for storing bookshelf data on the backend server
 let token = localStorage.token
 if (!token)
