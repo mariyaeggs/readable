@@ -241,7 +241,7 @@ class Readable extends React.Component {
             </div>
           </div>
 
-          <button className="open-search" onClick={() => this.showForm()} />
+          <button className="open-search" onClick={() => this.setState({'showForm': true})} />
 
           <div>
             { this.state.showForm &&
