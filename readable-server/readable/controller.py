@@ -9,26 +9,31 @@ from readable.models import book_model
 
 @application.route('/', methods=['GET'])
 def health_check():
+    """Health check endpoint."""
     return flaskify(response.Response('all is well that begins well'))
 
 
 @application.route('/books', methods=['GET'])
 def get_books():
+    """Return all books in database."""
     return flaskify(book_model.get_books())
 
 
 @application.route('/book/<int:book_id>', methods=['PUT'])
 def update_book_by_id(book_id):
+    """Update a book."""
     book_data = request.get_json()  # dict of key value pairs
     return flaskify(book_model.update_book(book_id, book_data))
 
 
 @application.route('/book', methods=['POST'])
 def create_book():
+    """Create a new book."""
     book_data = request.get_json()
     return flaskify(book_model.create_book(book_data))
 
 
 @application.route('/book/<int:book_id>', methods=['DELETE'])
 def delete_book(book_id):
+    """Delete a book."""
     return flaskify(book_model.delete_book(book_id))
