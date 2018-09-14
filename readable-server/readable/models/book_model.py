@@ -33,7 +33,6 @@ class Book(mysql_connector.BaseModel):
 
 def get_books():
     with mysql_connector.db_session() as session:
-        # import pdb; pdb.set_trace()
         books = session.query(Book).all()
         books_list = []
         for book in books:
