@@ -17,6 +17,7 @@ class Book(mysql_connector.BaseModel):
     title = Column(String)
     author = Column(String)
     image_url = Column(String)
+    Image_URL_L = Column(String)
     isbn = Column(String)
     shelf = Column(Integer)
 
@@ -25,7 +26,7 @@ class Book(mysql_connector.BaseModel):
             'book_id': self.book_id,
             'title': self.title,
             'author': self.author,
-            'image_url': self.image_url,
+            'image_url': self.Image_URL_L,
             'isbn': self.isbn,
             'shelf': self.shelf
         }

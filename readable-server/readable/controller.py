@@ -10,7 +10,11 @@ from readable.models import library_book_model
 
 @application.route('/', methods=['GET'])
 def health_check():
-    """Health check endpoint."""
+    """Health check for application
+
+    Return:
+        response.Response, a health message
+    """
     return flaskify(response.Response('all is well that begins well'))
 
 
