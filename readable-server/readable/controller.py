@@ -5,6 +5,7 @@ from oto.adaptors.flask import flaskify
 
 from readable.api import application
 from readable.models import book_model
+from readable.models import library_book_model
 
 
 @application.route('/', methods=['GET'])
@@ -37,3 +38,16 @@ def create_book():
 def delete_book(book_id):
     """Delete a book."""
     return flaskify(book_model.delete_book(book_id))
+
+
+@application.route('/library-book/<int:book_id>', methods=['GET'])
+def get_book_from_library(book_id):
+    """Fetch a book from the book library by id."""
+    return flaskify(library_book_model.get_book_by_id(book_id))
+
+
+@application.route('/library-book/search', methods=['GET'])
+def search_for_books():
+    """Fetch a book from the book library by id."""
+    search_term = request.args.get('term')
+    return flaskify(library_book_model.search_for_books(search_term))
