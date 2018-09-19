@@ -14,20 +14,21 @@ class Book(mysql_connector.BaseModel):
 
     book_id = Column(
         Integer, primary_key=True, autoincrement=True, nullable=False)
-    title = Column(String)
-    author = Column(String)
-    image_url = Column(String)
+    BOOK_TITLE = Column(String)
+    BOOK_AUTHOR = Column(String)
+    IMAGE_URL_S = Column(String)
+    IMAGE_URL_M = Column(String)
     Image_URL_L = Column(String)
-    isbn = Column(String)
+    ISBN = Column(String)
     shelf = Column(Integer)
 
     def to_dict(self):
         return {
             'book_id': self.book_id,
-            'title': self.title,
-            'author': self.author,
-            'image_url': self.Image_URL_L,
-            'isbn': self.isbn,
+            'BOOK_TITLE': self.BOOK_TITLE,
+            'BOOK_AUTHOR': self.BOOK_AUTHOR,
+            'IMAGE_URL_L': self.Image_URL_L,
+            'ISBN': self.ISBN,
             'shelf': self.shelf
         }
 
@@ -71,4 +72,4 @@ def delete_book(book_id):
         session.commit()
     return response.Response(
         message='Successfully deleted book: {}'.format(
-            existing_book_result.title))
+            existing_book_result.BOOK_TITLE))
