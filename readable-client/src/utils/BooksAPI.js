@@ -4,8 +4,8 @@
 
 
 // API Constant
-// const api = 'http://readable-server-dev.us-east-1.elasticbeanstalk.com/';
-const api = 'http://localhost:5000';
+const api = 'http://readable-server-dev.us-east-1.elasticbeanstalk.com/';
+// const api = 'http://localhost:5000';
 
 // Headers to be included with each request
 const headers = {
