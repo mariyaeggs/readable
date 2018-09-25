@@ -213,3 +213,6 @@ input[type=submit],
 .btn-link {
     margin-top: 20px;
 }
+.search-dropdown {
+  width: 100px;
+}
