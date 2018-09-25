@@ -44,16 +44,25 @@ def get_book_by_id(book_id):
 def search_for_books(search_term):
     """Search for a book."""
     with mysql_connector.db_session() as session:
-        isbn_books = session.query(LibraryBook).filter(LibraryBook.ISBN.contains(search_term))
-        title_books = session.query(LibraryBook).filter(LibraryBook.BOOK_TITLE.contains(search_term))
-        author_books = session.query(LibraryBook).filter(LibraryBook.BOOK_AUTHOR.contains(search_term))
-        title_results = []
-        author_results = []
+        isbn_books = session.query(
+            LibraryBook).filter(LibraryBook.ISBN.contains(
+                search_term)).limit(20)
+        title_books = session.query(
+            LibraryBook).filter(LibraryBook.BOOK_TITLE.contains(
+                search_term)).limit(20)
+        author_books = session.query(
+            LibraryBook).filter(LibraryBook.BOOK_AUTHOR.contains(
+                search_term)).limit(20)
+
         isbn_results = []
         for book in isbn_books:
             isbn_results.append(book.to_dict())
+
+        title_results = []
         for book in title_books:
             title_results.append(book.to_dict())
+
+        author_results = []
         for book in author_books:
             author_results.append(book.to_dict())
 
