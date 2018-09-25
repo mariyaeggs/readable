@@ -13,7 +13,8 @@ class Readable extends React.Component {
     imageUrl: '',
     shelf: 3,
     showForm: false,
-
+    searchTerm: '',
+    searchResults: [],
   }
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
@@ -65,9 +66,24 @@ class Readable extends React.Component {
     this.setState({ imageUrl: (event.target.value) });
   }
 
+  handleSearchChange = (event) => {
+    this.setState({ searchTerm: event.target.value})
+  }
+
+  handleSearchSubmit = (event) => {
+    BooksAPI.search(this.state.searchTerm).then((results) => {
+      const authorResults = [];
+      for (let i = 0; i < results.author_results.length; i++) {
+        authorResults.push(results.author_results[i].title)
+      }
+      this.setState({ searchResults: authorResults})
+    });
+    event.preventDefault();
+  }
+
   render() {
     const {
-      allBooks, title, shelf, author, isbn, imageUrl,
+      allBooks, title, shelf, author, isbn, imageUrl, searchResults
     } = this.state;
 
     return (
@@ -76,6 +92,18 @@ class Readable extends React.Component {
           <div className="list-books-title">
             <h1>Readable</h1>
           </div>
+          <form onSubmit={this.handleSearchSubmit}>
+            <label>
+              Search:
+              <input
+                type="text"
+                value={this.state.searchTerm}
+                onChange={this.handleSearchChange} />
+            </label>
+              <input type="submit" value="Submit" />
+          </form>
+          searchResults:
+          { searchResults }
           <div className="list-books-content">
             <div>
               <BookShelf
