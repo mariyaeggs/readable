@@ -54,4 +54,6 @@ def get_book_from_library(book_id):
 def search_for_books():
     """Fetch a book from the book library by id."""
     search_term = request.args.get('term')
-    return flaskify(library_book_model.search_for_books(search_term))
+    search_category = request.args.get('category').lower()
+    return flaskify(library_book_model.search_for_books(
+        search_term, search_category))
