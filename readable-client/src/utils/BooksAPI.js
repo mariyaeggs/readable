@@ -38,3 +38,10 @@ export const createBook = bookData =>
     },
     body: JSON.stringify(bookData),
   }).then(res => res.json());
+
+
+export const search = (searchTerm) =>
+  fetch(`${api}/library-book/search?term=${searchTerm}`, { headers })
+    .then(res => res.json());
+
+

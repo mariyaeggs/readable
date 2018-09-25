@@ -3,6 +3,7 @@ import findIndex from 'lodash.findindex';
 import * as BooksAPI from './utils/BooksAPI';
 import './App.css';
 import { BookShelf } from './components';
+import { SearchDropdown } from './components';
 
 
 class Readable extends React.Component {
@@ -13,7 +14,6 @@ class Readable extends React.Component {
     imageUrl: '',
     shelf: 3,
     showForm: false,
-
   }
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
@@ -67,7 +67,7 @@ class Readable extends React.Component {
 
   render() {
     const {
-      allBooks, title, shelf, author, isbn, imageUrl,
+      allBooks, title, shelf, author, isbn, imageUrl
     } = this.state;
 
     return (
@@ -78,6 +78,7 @@ class Readable extends React.Component {
           </div>
           <div className="list-books-content">
             <div>
+              <SearchDropdown/>
               <BookShelf
                 books={allBooks.filter(book => book.shelf === 1)}
                 shelfTitle="Reading"
