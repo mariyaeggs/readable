@@ -41,36 +41,27 @@ def get_book_by_id(book_id):
         return response.Response(book_data)
 
 
-def search_for_books(search_term):
+def search_for_books(search_term, search_category):
     """Search for a book."""
     with mysql_connector.db_session() as session:
-        isbn_books = session.query(
-            LibraryBook).filter(LibraryBook.ISBN.contains(
-                search_term)).limit(20)
-        title_books = session.query(
-            LibraryBook).filter(LibraryBook.BOOK_TITLE.contains(
-                search_term)).limit(20)
-        author_books = session.query(
-            LibraryBook).filter(LibraryBook.BOOK_AUTHOR.contains(
-                search_term)).limit(20)
+        if search_category == 'isbn':
+            results = session.query(
+                LibraryBook).filter(LibraryBook.ISBN.contains(
+                    search_term)).limit(20)
+        elif search_category == 'title':
+            results = session.query(
+                LibraryBook).filter(LibraryBook.BOOK_TITLE.contains(
+                    search_term)).limit(20)
+        elif search_category == 'author':
+            results = session.query(
+                LibraryBook).filter(LibraryBook.BOOK_AUTHOR.contains(
+                    search_term)).limit(20)
+        else:
+            return response.create_error_response(
+                400, 'Invalid Search Category')
 
-        isbn_results = []
-        for book in isbn_books:
-            isbn_results.append(book.to_dict())
+        results_data = []
+        for book in results:
+            results_data.append(book.to_dict())
 
-        title_results = []
-        for book in title_books:
-            title_results.append(book.to_dict())
-
-        author_results = []
-        for book in author_books:
-            author_results.append(book.to_dict())
-
-        result_count = len(title_results) + len(author_results) + len(isbn_results)
-        payload = {
-            'results_found': result_count,
-            'title_results': title_results,
-            'author_results': author_results,
-            'isbn_results': isbn_results
-        }
-        return response.Response(payload)
+        return response.Response(results_data)
