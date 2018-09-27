@@ -2,8 +2,7 @@ import React from 'react';
 import findIndex from 'lodash.findindex';
 import * as BooksAPI from './utils/BooksAPI';
 import './App.css';
-import { BookShelf } from './components';
-import { SearchDropdown } from './components';
+import { BookShelf, Search } from './components';
 
 
 class Readable extends React.Component {
@@ -78,7 +77,7 @@ class Readable extends React.Component {
           </div>
           <div className="list-books-content">
             <div>
-              <SearchDropdown/>
+              <Search />
               <BookShelf
                 books={allBooks.filter(book => book.shelf === 1)}
                 shelfTitle="Reading"

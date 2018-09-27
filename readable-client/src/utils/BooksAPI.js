@@ -40,8 +40,8 @@ export const createBook = bookData =>
   }).then(res => res.json());
 
 
-export const search = (searchTerm) =>
-  fetch(`${api}/library-book/search?term=${searchTerm}`, { headers })
+export const search = (searchTerm, searchCategory) =>
+  fetch(`${api}/library-book/search?term=${searchTerm}&category=${searchCategory}`, { headers })
     .then(res => res.json());
 
 
