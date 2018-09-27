@@ -216,3 +216,12 @@ input[type=submit],
 .search-dropdown {
   width: 120px;
 }
+
+/* search-results */
+.search-result-img {
+  padding: 25px;
+}
+
+.search-result-heading {
+  padding-top: 25px;
+}
