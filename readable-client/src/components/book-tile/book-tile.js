@@ -9,7 +9,7 @@ export default class BookTile extends React.Component {
     shelfNumber: PropTypes.number,
   };
 
-  handleMoveBooksFromShelf = (event) => {
+  handleMoveBooksFromShelf = event => {
     const { moveBook } = this.props;
     const splitArray = event.target.value.split(',');
     const shelf = Number(splitArray[0]);
