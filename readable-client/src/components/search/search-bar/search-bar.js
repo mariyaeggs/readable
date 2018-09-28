@@ -30,36 +30,38 @@ export default class SearchBar extends React.Component {
     } = this.props;
 
     return (
-      <InputGroup>
-        <InputGroupButtonDropdown
-          addonType="prepend"
-          isOpen={dropdownOpen}
-          toggle={toggleDropDown}
-          className="dropdown-button"
-        >
-          <DropdownToggle caret className="search-dropdown">
-            {searchCategory}
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem
-              onClick={() => handleSelectSearchText('Title')}
-            >
-              Title
-            </DropdownItem>
-            <DropdownItem
-              onClick={() => handleSelectSearchText('Author')}
-            >
-              Author
-            </DropdownItem>
-            <DropdownItem
-              onClick={() => handleSelectSearchText('ISBN')}
-            >
-              ISBN
-            </DropdownItem>
-          </DropdownMenu>
-        </InputGroupButtonDropdown>
-        <Input onChange={handleInputChange}/>
-      </InputGroup>
+      <div className="search-bar">
+        <InputGroup>
+          <InputGroupButtonDropdown
+            addonType="prepend"
+            isOpen={dropdownOpen}
+            toggle={toggleDropDown}
+            className="dropdown-button"
+          >
+            <DropdownToggle caret className="search-dropdown">
+              {searchCategory}
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem
+                onClick={() => handleSelectSearchText('Title')}
+              >
+                Title
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => handleSelectSearchText('Author')}
+              >
+                Author
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => handleSelectSearchText('ISBN')}
+              >
+                ISBN
+              </DropdownItem>
+            </DropdownMenu>
+          </InputGroupButtonDropdown>
+          <Input onChange={handleInputChange}/>
+        </InputGroup>
+      </div>
     );
   }
 }

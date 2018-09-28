@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchBar from './search-bar/search-bar'
+import SearchResults from './search-results/search-results'
 import '../../App.css';
 import * as BooksAPI from '../../utils/BooksAPI';
 
@@ -15,7 +16,6 @@ export default class Search extends React.Component {
       dropdownOpen: !this.state.dropdownOpen
     });
   }
-
 
   handleSelectSearchText = category => {
     this.setState({searchCategory: category})
@@ -51,18 +51,7 @@ export default class Search extends React.Component {
           searchCategory={searchCategory}
           toggleDropDown={this.toggleDropDown}
         />
-        <ol>
-          { searchResults.map(book => (
-            <li key={book.book_id}>
-              {book.title}
-              <br/>
-              {book.author}
-              <br/>
-              {book.isbn}
-            </li>
-            ))
-          }
-        </ol>
+        <SearchResults searchResults={searchResults} />
       </div>
     );
   }
