@@ -1,26 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 export default class BookTile extends React.Component {
   static propTypes = {
-    book: PropTypes.object,
-    removeBook: PropTypes.func,
-    moveBook: PropTypes.func,
-    shelfNumber: PropTypes.number,
+    book: PropTypes.shape({
+      book_id: PropTypes.number.isRequired,
+      IMAGE_URL_L: PropTypes.string.isRequired,
+      BOOK_TITLE: PropTypes.string.isRequired,
+      BOOK_AUTHOR: PropTypes.string.isRequired,
+    }).isRequired,
+    removeBook: PropTypes.func.isRequired,
+    moveBook: PropTypes.func.isRequired,
+    shelfNumber: PropTypes.number.isRequired,
   };
 
-  handleMoveBooksFromShelf = event => {
+  handleMoveBooksFromShelf = (event) => {
     const { moveBook } = this.props;
     const splitArray = event.target.value.split(',');
     const shelf = Number(splitArray[0]);
     const bookId = splitArray[1];
-    moveBook(bookId, shelf)
+    moveBook(bookId, shelf);
   }
 
   render() {
     const { book, removeBook, shelfNumber } = this.props;
 
-    return(
+    return (
       <div className="book">
         <div className="book-top">
           <div
@@ -55,6 +60,6 @@ export default class BookTile extends React.Component {
           className="book-remove"
         />
       </div>
-    )
+    );
   }
 }

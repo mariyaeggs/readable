@@ -1,67 +1,66 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   InputGroup,
   InputGroupButtonDropdown,
   Input,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
- } from 'reactstrap';
+  DropdownItem,
+} from 'reactstrap';
 import '../../../App.css';
-import PropTypes from 'prop-types'
 
-export default class SearchBar extends React.Component {
-  static propTypes = {
-    dropdownOpen: PropTypes.bool,
-    handleInputChange: PropTypes.func,
-    handleSelectSearchText: PropTypes.func,
-    searchCategory: PropTypes.string,
-    toggleDropDown: PropTypes.func,
-  };
+const SearchBar = (props) => {
+  const {
+    dropdownOpen,
+    handleInputChange,
+    handleSelectSearchText,
+    searchCategory,
+    toggleDropDown,
+  } = props;
 
+  return (
+    <div className="search-bar">
+      <InputGroup>
+        <InputGroupButtonDropdown
+          addonType="prepend"
+          isOpen={dropdownOpen}
+          toggle={toggleDropDown}
+          className="dropdown-button"
+        >
+          <DropdownToggle caret className="search-dropdown">
+            {searchCategory}
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem
+              onClick={() => handleSelectSearchText('Title')}
+            >
+              Title
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => handleSelectSearchText('Author')}
+            >
+              Author
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => handleSelectSearchText('ISBN')}
+            >
+              ISBN
+            </DropdownItem>
+          </DropdownMenu>
+        </InputGroupButtonDropdown>
+        <Input onChange={handleInputChange} />
+      </InputGroup>
+    </div>
+  );
+};
 
-  render() {
-    const {
-      dropdownOpen,
-      handleInputChange,
-      handleSelectSearchText,
-      searchCategory,
-      toggleDropDown,
-    } = this.props;
+SearchBar.propTypes = {
+  dropdownOpen: PropTypes.bool.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  handleSelectSearchText: PropTypes.func.isRequired,
+  searchCategory: PropTypes.string.isRequired,
+  toggleDropDown: PropTypes.func.isRequired,
+};
 
-    return (
-      <div className="search-bar">
-        <InputGroup>
-          <InputGroupButtonDropdown
-            addonType="prepend"
-            isOpen={dropdownOpen}
-            toggle={toggleDropDown}
-            className="dropdown-button"
-          >
-            <DropdownToggle caret className="search-dropdown">
-              {searchCategory}
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem
-                onClick={() => handleSelectSearchText('Title')}
-              >
-                Title
-              </DropdownItem>
-              <DropdownItem
-                onClick={() => handleSelectSearchText('Author')}
-              >
-                Author
-              </DropdownItem>
-              <DropdownItem
-                onClick={() => handleSelectSearchText('ISBN')}
-              >
-                ISBN
-              </DropdownItem>
-            </DropdownMenu>
-          </InputGroupButtonDropdown>
-          <Input onChange={handleInputChange}/>
-        </InputGroup>
-      </div>
-    );
-  }
-}
+export default SearchBar;

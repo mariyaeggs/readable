@@ -1,6 +1,7 @@
 /**
  * @file BooksAPI - all endpoints in use by application.
  */
+import fetch from 'isomorphic-fetch';
 
 
 // API Constant
@@ -43,5 +44,3 @@ export const createBook = bookData =>
 export const search = (searchTerm, searchCategory) =>
   fetch(`${api}/library-book/search?term=${searchTerm}&category=${searchCategory}`, { headers })
     .then(res => res.json());
-
-
