@@ -16,6 +16,7 @@ const SearchBar = (props) => {
     handleInputChange,
     handleSelectSearchText,
     searchCategory,
+    searchTerm,
     toggleDropDown,
   } = props;
 
@@ -49,7 +50,7 @@ const SearchBar = (props) => {
             </DropdownItem>
           </DropdownMenu>
         </InputGroupButtonDropdown>
-        <Input onChange={handleInputChange} />
+        <Input onChange={handleInputChange} value={searchTerm} />
       </InputGroup>
     </div>
   );
@@ -60,6 +61,7 @@ SearchBar.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   handleSelectSearchText: PropTypes.func.isRequired,
   searchCategory: PropTypes.string.isRequired,
+  searchTerm: PropTypes.string.isRequired,
   toggleDropDown: PropTypes.func.isRequired,
 };
 
