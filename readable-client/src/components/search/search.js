@@ -23,9 +23,7 @@ export default class Search extends React.Component {
   }
 
   handleResultClick = (bookId) => {
-    console.log('clicked');
-    console.log(bookId);
-    this.setState({ searchResults: [] });
+    this.setState({ searchResults: [], searchTerm: '' });
   }
 
   handleInputChange = (event) => {
@@ -41,16 +39,19 @@ export default class Search extends React.Component {
       return;
     }
 
+    const baseUrl = 'http://andrewcmaxwell.com';
+
     BooksAPI.search(searchTerm, searchCategory).then((results) => {
       if (results.length) {
         this.setState({ searchResults: results });
       } else {
         this.setState({
           searchResults: [{
-            title: 'Try another search term',
+            title: 'Try another search',
             book_id: 1,
-            image_url: '../../../public/book_not_found.png',
-          }]
+            image_url: `${baseUrl}/wp-content/themes/acm_2014/images/book_not_found.png`,
+            author: 'No results found for this search term',
+          }],
         });
       }
     });
