@@ -66,7 +66,7 @@ class Readable extends React.Component {
 
   render() {
     const {
-      allBooks, title, shelf, author, isbn, imageUrl
+      allBooks, title, shelf, author, isbn, imageUrl,
     } = this.state;
 
     return (
@@ -102,7 +102,7 @@ class Readable extends React.Component {
             </div>
           </div>
 
-          <button className="open-search" onClick={() => this.setState({'showForm': true})} />
+          <button className="open-search" onClick={() => this.setState({ showForm: true })} />
 
           <div>
             { this.state.showForm &&
