@@ -5,7 +5,7 @@ import '../../../App.css';
 
 
 const SearchResults = (props) => {
-  const { searchResults } = props;
+  const { searchResults, handleResultClick } = props;
 
   const imgStyle = {
     height: '108px',
@@ -15,7 +15,11 @@ const SearchResults = (props) => {
   return (
     <div>
       { searchResults.slice(0, 5).map(book => (
-        <Media key={book.book_id} className="search-result">
+        <Media
+          key={book.book_id}
+          className="search-result"
+          onClick={() => handleResultClick(book.book_id)}
+        >
           <Media left href="#">
             <Media
               className="search-result-img"
@@ -41,6 +45,7 @@ const SearchResults = (props) => {
 
 SearchResults.propTypes = {
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleResultClick: PropTypes.func.isRequired,
 };
 
 export default SearchResults;
