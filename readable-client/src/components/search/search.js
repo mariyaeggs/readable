@@ -9,6 +9,7 @@ export default class Search extends React.Component {
     dropdownOpen: false,
     searchCategory: 'Search By',
     searchResults: [],
+    searchTerm: 'Please Select a Category to Search By',
   };
 
   toggleDropDown = () => {
@@ -18,7 +19,7 @@ export default class Search extends React.Component {
   }
 
   handleSelectSearchText = (category) => {
-    this.setState({ searchCategory: category });
+    this.setState({ searchCategory: category, searchTerm: '' });
   }
 
   handleResultClick = (bookId) => {
@@ -28,19 +29,29 @@ export default class Search extends React.Component {
   }
 
   handleInputChange = (event) => {
-    const searchTerm = event.target.value;
+    const { searchCategory } = this.state;
+    if (searchCategory === 'Search By') {
+      return;
+    }
+    this.setState({ searchTerm: event.target.value });
+    const { searchTerm } = this.state;
+
     if (searchTerm === '') {
       this.setState({ searchResults: [] });
       return;
     }
 
-    const { searchCategory } = this.state;
-
     BooksAPI.search(searchTerm, searchCategory).then((results) => {
       if (results.length) {
         this.setState({ searchResults: results });
       } else {
-        this.setState({ searchResults: [{ title: 'Try another search term', book_id: 1 }] });
+        this.setState({
+          searchResults: [{
+            title: 'Try another search term',
+            book_id: 1,
+            image_url: '../../../public/book_not_found.png',
+          }]
+        });
       }
     });
   }
@@ -48,7 +59,7 @@ export default class Search extends React.Component {
 
   render() {
     const {
-      searchCategory, searchResults, dropdownOpen,
+      searchCategory, searchResults, dropdownOpen, searchTerm,
     } = this.state;
     return (
       <div>
@@ -57,6 +68,7 @@ export default class Search extends React.Component {
           handleInputChange={this.handleInputChange}
           handleSelectSearchText={this.handleSelectSearchText}
           searchCategory={searchCategory}
+          searchTerm={searchTerm}
           toggleDropDown={this.toggleDropDown}
         />
         <SearchResults searchResults={searchResults} handleResultClick={this.handleResultClick} />
