@@ -21,6 +21,12 @@ export default class Search extends React.Component {
     this.setState({ searchCategory: category });
   }
 
+  handleResultClick = (bookId) => {
+    console.log('clicked');
+    console.log(bookId);
+    this.setState({ searchResults: [] });
+  }
+
   handleInputChange = (event) => {
     const searchTerm = event.target.value;
     if (searchTerm === '') {
@@ -41,7 +47,9 @@ export default class Search extends React.Component {
 
 
   render() {
-    const { searchCategory, searchResults, dropdownOpen } = this.state;
+    const {
+      searchCategory, searchResults, dropdownOpen,
+    } = this.state;
     return (
       <div>
         <SearchBar
@@ -51,7 +59,7 @@ export default class Search extends React.Component {
           searchCategory={searchCategory}
           toggleDropDown={this.toggleDropDown}
         />
-        <SearchResults searchResults={searchResults} />
+        <SearchResults searchResults={searchResults} handleResultClick={this.handleResultClick} />
       </div>
     );
   }
