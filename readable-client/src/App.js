@@ -1,5 +1,6 @@
 import React from 'react';
 import findIndex from 'lodash.findindex';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import * as BooksAPI from './utils/BooksAPI';
 import './App.css';
 import { BookShelf, Search } from './components';
@@ -13,6 +14,7 @@ class Readable extends React.Component {
     imageUrl: '',
     shelf: 3,
     showForm: false,
+    modal: false,
   }
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
@@ -64,6 +66,12 @@ class Readable extends React.Component {
     this.setState({ imageUrl: (event.target.value) });
   }
 
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  }
+
   render() {
     const {
       allBooks, title, shelf, author, isbn, imageUrl,
@@ -77,7 +85,7 @@ class Readable extends React.Component {
           </div>
           <div className="list-books-content">
             <div>
-              <Search />
+              <Search toggleModal={this.toggleModal} />
               <BookShelf
                 books={allBooks.filter(book => book.shelf === 1)}
                 shelfTitle="Reading"
@@ -102,7 +110,7 @@ class Readable extends React.Component {
             </div>
           </div>
 
-          <button className="open-search" onClick={() => this.setState({ showForm: true })} />
+          <button className="open-search" onClick={this.toggleModal} />
 
           <div>
             { this.state.showForm &&
@@ -166,6 +174,29 @@ class Readable extends React.Component {
             </form>
           }
           </div>
+        </div>
+        <div>
+          <Modal
+            isOpen={this.state.modal}
+            toggle={this.toggleModal}
+            className="modal-container"
+          >
+            <ModalHeader toggle={this.toggle}>
+              Mariya&apos;s Tiiiiight vag
+            </ModalHeader>
+            <ModalBody>
+              This is where you might describe how wet it is
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={this.toggleModal}>Get in There</Button>{' '}
+              <Button
+                color="secondary"
+                onClick={this.toggleModal}
+              >
+                Wish you were in there already
+              </Button>
+            </ModalFooter>
+          </Modal>
         </div>
       </div>
 
