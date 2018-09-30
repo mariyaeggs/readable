@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SearchBar from './search-bar/search-bar';
 import SearchResults from './search-results/search-results';
 import '../../App.css';
 import * as BooksAPI from '../../utils/BooksAPI';
 
-export default class Search extends React.Component {
+class Search extends React.Component {
   state = {
     dropdownOpen: false,
     searchCategory: 'Search By',
@@ -23,7 +24,9 @@ export default class Search extends React.Component {
   }
 
   handleResultClick = (bookId) => {
+    const { toggleModal } = this.props;
     this.setState({ searchResults: [], searchTerm: '' });
+    toggleModal();
   }
 
   handleInputChange = (event) => {
@@ -32,8 +35,11 @@ export default class Search extends React.Component {
       return;
     }
     this.setState({ searchTerm: event.target.value });
-    const { searchTerm } = this.state;
+    this.callSearch(event.target.value);
+  }
 
+  callSearch = (searchTerm) => {
+    const { searchCategory } = this.state;
     if (searchTerm === '') {
       this.setState({ searchResults: [] });
       return;
@@ -62,6 +68,7 @@ export default class Search extends React.Component {
     const {
       searchCategory, searchResults, dropdownOpen, searchTerm,
     } = this.state;
+
     return (
       <div>
         <SearchBar
@@ -72,8 +79,17 @@ export default class Search extends React.Component {
           searchTerm={searchTerm}
           toggleDropDown={this.toggleDropDown}
         />
-        <SearchResults searchResults={searchResults} handleResultClick={this.handleResultClick} />
+        <SearchResults
+          searchResults={searchResults}
+          handleResultClick={this.handleResultClick}
+        />
       </div>
     );
   }
 }
+
+Search.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+};
+
+export default Search;
