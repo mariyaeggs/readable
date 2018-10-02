@@ -25,10 +25,10 @@ class LibraryBook(mysql_connector.BaseModel):
 
     def to_dict(self):
         return {
-            'book_id': self.index,
+            'bookId': self.index,
             'title': self.BOOK_TITLE,
             'author': self.BOOK_AUTHOR,
-            'image_url': self.IMAGE_URL_L,
+            'imageUrl': self.IMAGE_URL_L,
             'isbn': self.ISBN
         }
 

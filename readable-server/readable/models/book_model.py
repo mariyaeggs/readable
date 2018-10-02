@@ -24,11 +24,11 @@ class Book(mysql_connector.BaseModel):
 
     def to_dict(self):
         return {
-            'book_id': self.book_id,
-            'BOOK_TITLE': self.BOOK_TITLE,
-            'BOOK_AUTHOR': self.BOOK_AUTHOR,
-            'IMAGE_URL_L': self.Image_URL_L,
-            'ISBN': self.ISBN,
+            'bookId': self.book_id,
+            'title': self.BOOK_TITLE,
+            'author': self.BOOK_AUTHOR,
+            'imageUrl': self.Image_URL_L,
+            'isbn': self.ISBN,
             'shelf': self.shelf
         }
 
@@ -55,7 +55,14 @@ def update_book(book_id, book_data):
 
 
 def create_book(book_data):
-    book = Book(**book_data)  # unpack data
+    book_model_dict = {
+        'BOOK_TITLE': book_data.get('title'),
+        'BOOK_AUTHOR': book_data.get('author'),
+        'Image_URL_L': book_data.get('imageUrl'),
+        'shelf': book_data.get('shelf'),
+        'ISBN': book_data.get('isbn')
+    }
+    book = Book(**book_model_dict)  # unpack data
     with mysql_connector.db_session() as session:
         session.add(book)
         session.flush()
