@@ -81,7 +81,7 @@ def test_create_book_success(client, headers):
         'shelf': 1,
         'isbn': '978-0143122968',
         'title': 'git this',
-        'image_url': 'https://image.jpg',
+        'imageUrl': 'https://image.jpg',
         'author': 'linus torvalis'}
 
     expected_message = new_book.copy()
@@ -106,7 +106,7 @@ def test_create_book_failure(client, headers):
         'shelf': 1,
         'isbn': '978-0143122968',
         'title': 'git this',
-        'image_url': 'https://image.jpg',
+        'imageUrl': 'https://image.jpg',
         'author': 'linus torvalis'}
 
     (flexmock(book_model).should_receive('create_book').with_args(
