@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 export default class BookTile extends React.Component {
   static propTypes = {
     book: PropTypes.shape({
-      book_id: PropTypes.number.isRequired,
-      IMAGE_URL_L: PropTypes.string.isRequired,
-      BOOK_TITLE: PropTypes.string.isRequired,
-      BOOK_AUTHOR: PropTypes.string.isRequired,
+      bookId: PropTypes.number.isRequired,
+      imageUrl: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
     }).isRequired,
     removeBook: PropTypes.func.isRequired,
     moveBook: PropTypes.func.isRequired,
@@ -24,7 +24,6 @@ export default class BookTile extends React.Component {
 
   render() {
     const { book, removeBook, shelfNumber } = this.props;
-
     return (
       <div className="book">
         <div className="book-top">
@@ -33,30 +32,30 @@ export default class BookTile extends React.Component {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${book.IMAGE_URL_L})`,
+              backgroundImage: `url(${book.imageUrl})`,
               backgroundSize: 'cover',
             }}
           />
           <div className="book-shelf-changer">
             <select
               onChange={this.handleMoveBooksFromShelf}
-              defaultValue={[shelfNumber, book.book_id]}
+              defaultValue={[shelfNumber, book.bookId]}
             >
               <option value="none" disabled>Move to...</option>
-              <option value={[1, book.book_id]}>Currently Reading</option>
-              <option value={[2, book.book_id]}>Want to Read</option>
-              <option value={[3, book.book_id]}>Read</option>
+              <option value={[1, book.bookId]}>Currently Reading</option>
+              <option value={[2, book.bookId]}>Want to Read</option>
+              <option value={[3, book.bookId]}>Read</option>
             </select>
           </div>
         </div>
         <div className="book-title">
-          {book.BOOK_TITLE}
+          {book.title}
         </div>
         <div className="book-authors">
-          {book.BOOK_AUTHOR}
+          {book.author}
         </div>
         <button
-          onClick={() => removeBook(book.book_id)}
+          onClick={() => removeBook(book.bookId)}
           className="book-remove"
         />
       </div>

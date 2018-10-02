@@ -24,7 +24,7 @@ class Readable extends React.Component {
   moveBooksFromShelf = (bookId, shelf) => {
     const { allBooks } = this.state;
     BooksAPI.updateShelf(bookId, shelf).then((updatedBook) => {
-      const index = findIndex(allBooks, { book_id: updatedBook.book_id });
+      const index = findIndex(allBooks, { bookId: updatedBook.bookId });
       allBooks.splice(index, 1, updatedBook);
       this.setState({ allBooks });
     });
@@ -32,7 +32,7 @@ class Readable extends React.Component {
   removeBook = (bookId) => {
     // Change state based on current state
     const { allBooks } = this.state;
-    const filterBookObject = allBooks.filter(bookItem => bookItem.book_id !== bookId);
+    const filterBookObject = allBooks.filter(bookItem => bookItem.bookId !== bookId);
     BooksAPI.removeBook(bookId).then(() => {
       this.setState({ allBooks: filterBookObject });
     });
