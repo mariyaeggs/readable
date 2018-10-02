@@ -16,16 +16,16 @@ const SearchResults = (props) => {
     <div>
       { searchResults.slice(0, 5).map(book => (
         <Media
-          key={book.book_id}
+          key={book.bookId}
           className="search-result"
-          onClick={() => handleResultClick(book.book_id)}
+          onClick={() => handleResultClick(book.bookId)}
         >
           <Media left href="#">
             <Media
               className="search-result-img"
               style={imgStyle}
               object
-              src={book.image_url}
+              src={book.imageUrl}
               alt="Book cover image."
             />
           </Media>

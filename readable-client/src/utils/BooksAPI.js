@@ -28,7 +28,7 @@ export const updateShelf = (bookId, shelf) =>
   }).then(res => res.json());
 
 export const removeBook = bookId =>
-  fetch(`${api}/book/${bookId}`, { method: 'DELETE', headers });
+  fetch(`${api}/book/${bookId}`, { method: 'DELETE', headers, 'Content-Type': 'application/json' });
 
 export const createBook = bookData =>
   fetch(`${api}/book`, {
