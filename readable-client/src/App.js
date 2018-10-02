@@ -24,7 +24,6 @@ class Readable extends React.Component {
     imageUrl: '',
     isbn: '',
     shelf: 3,
-    showForm: false,
     modal: false,
   }
   componentDidMount() {
@@ -32,21 +31,29 @@ class Readable extends React.Component {
       this.setState({ allBooks: books });
     });
   }
-  moveBooksFromShelf = (bookId, shelf) => {
-    const { allBooks } = this.state;
-    BooksAPI.updateShelf(bookId, shelf).then((updatedBook) => {
-      const index = findIndex(allBooks, { bookId: updatedBook.bookId });
-      allBooks.splice(index, 1, updatedBook);
-      this.setState({ allBooks });
+
+  setSearchResultToCreateForm = (book) => {
+    const newBook = book;
+    newBook.shelf = 1;
+    this.setState({
+      title: newBook.title,
+      author: newBook.author,
+      isbn: newBook.isbn,
+      imageUrl: newBook.imageUrl,
+      shelf: newBook.shelf,
     });
   }
-  removeBook = (bookId) => {
-    // Change state based on current state
-    const { allBooks } = this.state;
-    const filterBookObject = allBooks.filter(bookItem => bookItem.bookId !== bookId);
-    BooksAPI.removeBook(bookId).then(() => {
-      this.setState({ allBooks: filterBookObject });
-    });
+
+  createBookFromModal = () => {
+    const {
+      title, shelf, author, isbn, imageUrl,
+    } = this.state;
+
+    const newBook = {
+      title, shelf, author, isbn, imageUrl,
+    };
+    this.createBook(newBook);
+    this.toggleModal();
   }
 
   createBook = (bookData) => {
@@ -58,6 +65,24 @@ class Readable extends React.Component {
     });
     this.setState({
       shelf: 3, imageUrl: '', author: '', title: '', isbn: '',
+    });
+  }
+
+  removeBook = (bookId) => {
+    // Change state based on current state
+    const { allBooks } = this.state;
+    const filterBookObject = allBooks.filter(bookItem => bookItem.bookId !== bookId);
+    BooksAPI.removeBook(bookId).then(() => {
+      this.setState({ allBooks: filterBookObject });
+    });
+  }
+
+  moveBooksFromShelf = (bookId, shelf) => {
+    const { allBooks } = this.state;
+    BooksAPI.updateShelf(bookId, shelf).then((updatedBook) => {
+      const index = findIndex(allBooks, { bookId: updatedBook.bookId });
+      allBooks.splice(index, 1, updatedBook);
+      this.setState({ allBooks });
     });
   }
 
@@ -84,31 +109,6 @@ class Readable extends React.Component {
   toggleModal = () => {
     this.setState({
       modal: !this.state.modal,
-    });
-  }
-
-  createBookFromModal = () => {
-    const {
-      title, shelf, author, isbn, imageUrl,
-    } = this.state;
-
-    const newBook = {
-      title, shelf, author, isbn, imageUrl,
-    };
-    console.log(newBook);
-    this.createBook(newBook);
-    this.toggleModal();
-  }
-
-  setSearchResultToCreateForm = (book) => {
-    const newBook = book;
-    newBook.shelf = 1;
-    this.setState({
-      title: newBook.title,
-      author: newBook.author,
-      isbn: newBook.isbn,
-      imageUrl: newBook.imageUrl,
-      shelf: newBook.shelf,
     });
   }
 
@@ -154,65 +154,6 @@ class Readable extends React.Component {
           </div>
 
           <button className="open-search" onClick={this.toggleModal} />
-
-          <div>
-            { this.state.showForm &&
-            <form >
-              <input
-                type="text"
-                name="title"
-                placeholder="Title"
-                value={title}
-                onChange={this.handleTitleChange}
-              />
-              <input
-                type="text"
-                name="author"
-                placeholder="Author"
-                value={author}
-                onChange={this.handleAuthorChange}
-              />
-              <input
-                type="text"
-                name="imageUrl"
-                placeholder="Image URL"
-                value={imageUrl}
-                onChange={this.handleUrlChange}
-              />
-              <select onChange={this.handleSelectShelf}>
-                <option
-                  value="none"
-                  disabled
-                  selected
-                >
-                  Move to...
-                </option>
-                <option value={1}>Currently Reading</option>
-                <option value={2}>Want to Read</option>
-                <option value={3}>Read</option>
-              </select>
-              <div
-                className="book-cover"
-                style={{
-                  width: 128,
-                  height: 193,
-                  backgroundImage: `url(${imageUrl})`,
-                  backgroundSize: 'cover',
-                }}
-              />
-
-              <button
-                onClick={
-                  () => this.createBook({
-                    shelf, title, author, isbn, image_url: imageUrl,
-                  })
-                }
-              >
-                create book
-              </button>
-            </form>
-          }
-          </div>
         </div>
         <div>
           <Modal
