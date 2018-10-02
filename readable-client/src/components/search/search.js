@@ -10,7 +10,7 @@ class Search extends React.Component {
     dropdownOpen: false,
     searchCategory: 'Search By',
     searchResults: [],
-    searchTerm: 'Please Select a Category to Search By',
+    searchTerm: 'Please select a term to search by',
   };
 
   toggleDropDown = () => {
@@ -19,45 +19,42 @@ class Search extends React.Component {
     });
   }
 
-  handleSelectSearchText = (category) => {
-    this.setState({ searchCategory: category, searchTerm: '' });
-  }
-
   handleResultClick = (bookId) => {
-    const { toggleModal } = this.props;
-    this.setState({ searchResults: [], searchTerm: '' });
+    const { toggleModal, setSearchResultToCreateForm } = this.props;
+    const { searchResults } = this.state;
+    const searchBook = searchResults.filter(book => book.bookId === bookId)[0];
+    this.setState({ searchResults: [] });
+    setSearchResultToCreateForm(searchBook);
     toggleModal();
   }
 
-  handleInputChange = (event) => {
-    const { searchCategory } = this.state;
-    if (searchCategory === 'Search By') {
-      return;
-    }
-    this.setState({ searchTerm: event.target.value });
-    this.callSearch(event.target.value);
+  handleSelectSearchText = (category) => {
+    this.setState({ searchCategory: category });
   }
 
-  callSearch = (searchTerm) => {
-    const { searchCategory } = this.state;
+  handleInputChange = (event) => {
+    const searchTerm = event.target.value;
     if (searchTerm === '') {
       this.setState({ searchResults: [] });
       return;
     }
 
-    const baseUrl = 'http://andrewcmaxwell.com';
+    const { searchCategory } = this.state;
+    const baseUrl = 'http://andrewcmaxwell.com/wp-content';
 
     BooksAPI.search(searchTerm, searchCategory).then((results) => {
       if (results.length) {
         this.setState({ searchResults: results });
       } else {
         this.setState({
-          searchResults: [{
-            title: 'Try another search',
-            book_id: 1,
-            image_url: `${baseUrl}/wp-content/themes/acm_2014/images/book_not_found.png`,
-            author: 'No results found for this search term',
-          }],
+          searchResults:
+            [
+              {
+                title: 'Try another search term',
+                bookId: 1,
+                imageUrl: `${baseUrl}/themes/acm_2014/images/book_not_found.png`,
+              },
+            ],
         });
       }
     });
@@ -66,17 +63,18 @@ class Search extends React.Component {
 
   render() {
     const {
-      searchCategory, searchResults, dropdownOpen, searchTerm,
+      searchCategory, searchResults, searchTerm, dropdownOpen,
     } = this.state;
 
+
     return (
-      <div>
+      <div className="search-bar">
         <SearchBar
           dropdownOpen={dropdownOpen}
           handleInputChange={this.handleInputChange}
           handleSelectSearchText={this.handleSelectSearchText}
-          searchCategory={searchCategory}
           searchTerm={searchTerm}
+          searchCategory={searchCategory}
           toggleDropDown={this.toggleDropDown}
         />
         <SearchResults
@@ -90,6 +88,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   toggleModal: PropTypes.func.isRequired,
+  setSearchResultToCreateForm: PropTypes.func.isRequired,
 };
 
 export default Search;
