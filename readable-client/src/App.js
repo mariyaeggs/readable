@@ -1,6 +1,16 @@
 import React from 'react';
 import findIndex from 'lodash.findindex';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+  Button,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from 'reactstrap';
 import * as BooksAPI from './utils/BooksAPI';
 import './App.css';
 import { BookShelf, Search } from './components';
@@ -12,6 +22,7 @@ class Readable extends React.Component {
     title: '',
     author: '',
     imageUrl: '',
+    isbn: '',
     shelf: 3,
     showForm: false,
     modal: false,
@@ -46,8 +57,12 @@ class Readable extends React.Component {
       window.scrollTo(0, 0);
     });
     this.setState({
-      showForm: false, shelf: 3, imageUrl: '', author: '', title: '', isbn: '',
+      shelf: 3, imageUrl: '', author: '', title: '', isbn: '',
     });
+  }
+
+  handleISBNChange = (event) => {
+    this.setState({ isbn: event.target.value });
   }
 
   handleTitleChange = (event) => {
@@ -72,6 +87,31 @@ class Readable extends React.Component {
     });
   }
 
+  createBookFromModal = () => {
+    const {
+      title, shelf, author, isbn, imageUrl,
+    } = this.state;
+
+    const newBook = {
+      title, shelf, author, isbn, imageUrl,
+    };
+    console.log(newBook);
+    this.createBook(newBook);
+    this.toggleModal();
+  }
+
+  setSearchResultToCreateForm = (book) => {
+    const newBook = book;
+    newBook.shelf = 1;
+    this.setState({
+      title: newBook.title,
+      author: newBook.author,
+      isbn: newBook.isbn,
+      imageUrl: newBook.imageUrl,
+      shelf: newBook.shelf,
+    });
+  }
+
   render() {
     const {
       allBooks, title, shelf, author, isbn, imageUrl,
@@ -85,7 +125,10 @@ class Readable extends React.Component {
           </div>
           <div className="list-books-content">
             <div>
-              <Search toggleModal={this.toggleModal} />
+              <Search
+                toggleModal={this.toggleModal}
+                setSearchResultToCreateForm={this.setSearchResultToCreateForm}
+              />
               <BookShelf
                 books={allBooks.filter(book => book.shelf === 1)}
                 shelfTitle="Reading"
@@ -144,11 +187,7 @@ class Readable extends React.Component {
                 >
                   Move to...
                 </option>
-                <option
-                  value={1}
-                >
-                  Currently Reading
-                </option>
+                <option value={1}>Currently Reading</option>
                 <option value={2}>Want to Read</option>
                 <option value={3}>Read</option>
               </select>
@@ -182,18 +221,82 @@ class Readable extends React.Component {
             className="modal-container"
           >
             <ModalHeader toggle={this.toggle}>
-              Mariya&apos;s Tiiiiight vag
+              Add a book
             </ModalHeader>
             <ModalBody>
-              This is where you might describe how wet it is
+              <Form className="modal-form">
+                <FormGroup>
+                  <Label>Title</Label>
+                  <Input
+                    type="text"
+                    name="title"
+                    id="title"
+                    value={title}
+                    placeholder="Book Title"
+                    onChange={this.handleTitleChange}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Author</Label>
+                  <Input
+                    type="text"
+                    name="author"
+                    id="author"
+                    value={author}
+                    placeholder="Book Author"
+                    onChange={this.handleAuthorChange}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Image URL</Label>
+                  <Input
+                    type="text"
+                    name="imageUrl"
+                    id="imageUrl"
+                    value={imageUrl}
+                    placeholder="Book Image URL"
+                    onChange={this.handleUrlChange}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>ISBN</Label>
+                  <Input
+                    type="text"
+                    name="isbn"
+                    id="isbn"
+                    value={isbn}
+                    placeholder="Book ISBN"
+                    onChange={this.handleISBNChange}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label >Shelf</Label>
+                  <Input
+                    type="select"
+                    name="shelf"
+                    id="shelf"
+                    value={shelf}
+                    onChange={this.handleSelectShelf}
+                  >
+                    <option value={1}>Reading</option>
+                    <option value={2}>Want to Read</option>
+                    <option value={3}>Read</option>
+                  </Input>
+                </FormGroup>
+              </Form>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={this.toggleModal}>Get in There</Button>{' '}
+              <Button
+                color="primary"
+                onClick={this.createBookFromModal}
+              >
+                Add Book
+              </Button>
               <Button
                 color="secondary"
                 onClick={this.toggleModal}
               >
-                Wish you were in there already
+                Cancel
               </Button>
             </ModalFooter>
           </Modal>

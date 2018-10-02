@@ -234,3 +234,8 @@ input[type=submit],
 .search-bar {
   margin: 20px 20px;
 }
+
+
+.modal-form {
+  border: 0px;
+}
