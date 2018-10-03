@@ -112,6 +112,17 @@ class Readable extends React.Component {
     });
   }
 
+  setBlankCreateForm = () => {
+    this.setState ({
+      title: '',
+      shelf: 1,
+      author: '',
+      isbn: '',
+      imageUrl: '',
+    });
+    this.toggleModal();
+  }
+
   render() {
     const {
       allBooks, title, shelf, author, isbn, imageUrl,
@@ -153,7 +164,7 @@ class Readable extends React.Component {
             </div>
           </div>
 
-          <button className="open-search" onClick={this.toggleModal} />
+          <button className="open-search" onClick={this.setBlankCreateForm} />
         </div>
         <div>
           <Modal
