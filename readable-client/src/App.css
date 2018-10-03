@@ -59,11 +59,15 @@ body, .app {
   outline: none;
 }
 .book-remove {
+  position: absolute;
+  z-index: 1;
+  margin: -5px 0 0px -12px;
+  border-radius: 30px;
   padding-left: 20px;
   align-self: center;
   width: 32px;
   height: 32px;
-  background-color: transparent;
+  background-color: white;
   background-image: url('./icons/cancel.svg');
   background-size: 100% 100%;
   border: 0;
@@ -234,7 +238,6 @@ input[type=submit],
 .search-bar {
   margin: 20px 20px;
 }
-
 
 .modal-form {
   border: 0px;

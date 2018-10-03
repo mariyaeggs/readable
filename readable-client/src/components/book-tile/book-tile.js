@@ -26,6 +26,10 @@ export default class BookTile extends React.Component {
     const { book, removeBook, shelfNumber } = this.props;
     return (
       <div className="book">
+        <button
+          onClick={() => removeBook(book.bookId)}
+          className="book-remove"
+        />
         <div className="book-top">
           <div
             className="book-cover"
@@ -48,16 +52,13 @@ export default class BookTile extends React.Component {
             </select>
           </div>
         </div>
+
         <div className="book-title">
           {book.title}
         </div>
         <div className="book-authors">
           {book.author}
         </div>
-        <button
-          onClick={() => removeBook(book.bookId)}
-          className="book-remove"
-        />
       </div>
     );
   }
